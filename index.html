@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <!-- get systemjs -->
+    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/regenerator-runtime@0.13.7/runtime.min.js"></script>
+    <script type="systemjs-importmap" src="./import-map.json"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/import-map-overrides/dist/import-map-overrides.js"
+    ></script>
+    <import-map-overrides-full
+      show-when-local-storage="devtools"
+    ></import-map-overrides-full>
+  </head>
+  <body>
+    <script>
+      const initRuntimeRefresh = port =>
+        import('http://localhost:' + port + '/@react-refresh').then(RefreshRuntime => {
+          RefreshRuntime.default.injectIntoGlobalHook(window);
+          window.$RefreshReg$ = () => {};
+          window.$RefreshSig$ = () => type => type;
+          window.__vite_plugin_react_preamble_installed__ = true;
+        });
+  
+    (function () {
+        const systemJSPrototype = System.constructor.prototype;
+  
+        const originalCreateScript = systemJSPrototype.createScript;
+        systemJSPrototype.createScript = function () {
+          return Object.assign(originalCreateScript.apply(this, arguments), {
+            type: 'module',
+          });
+        };
+        const originalInstantiate = systemJSPrototype.instantiate;
+        systemJSPrototype.instantiate = function (url) {
+          // make HMR work for esm modules which are localhost running modules
+          const isESM = url.includes('.tsx') || url.includes('.ts');
+          if (isESM) {
+            const portSplit = url.split(':');
+            if (portSplit.length >= 3) {
+              const port = portSplit[2].split('/')[0];
+              if (port) {
+                initRuntimeRefresh(port);
+              }
+            }
+          }
+  
+          // register modules
+          return originalInstantiate.apply(this, arguments).then(function (register) {
+            if (isESM) {
+              // esm should be used in dev mode
+              return import(url).then(m => [[], _export => (_export(m), {})]);
+            }
+  
+            // systemjs is default
+            const originalFn = register[1];
+            register[1] = function (_export, _context) {
+              _export('__esModule', true);
+              return originalFn.call(this, _export, _context);
+            };
+            return register;
+          });
+        };
+      })(typeof self !== 'undefined' ? self : global);
+    </script>
+    <script type="module">
+      System.import("@acc/root-config");
+    </script>
+  </body>
+</html>
