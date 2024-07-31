@@ -7,6 +7,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
+    "coverage": "vitest --coverage",
     "lint": "eslint src --ext ts,tsx",
     "format": "prettier --write .",
     "check-format": "prettier --check .",
