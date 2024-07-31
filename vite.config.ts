@@ -39,10 +39,6 @@ export default defineConfig({
       usePolling: true
     }
   },
-  test: {
-    globals: true,
-    environment: "jsdom",
-  },
   build: {
     target: "es2022",
     rollupOptions: {
