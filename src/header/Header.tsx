@@ -7,7 +7,6 @@ function Header() {
 
   useEffect(()=>{
     const listener = (event:any)=>{
-      console.log('aa ',event);
       setData(event.detail);
     }
     window.addEventListener('profile-order-fetched',listener);
@@ -30,7 +29,7 @@ function Header() {
       </div>
       {
         data!=null &&
-        <div style={{display:'flex', alignItems:'center',  justifyContent:'end', width:'100%', marginRight:'20px'}}>
+        <div id ="profileDetails" style={{display:'flex', alignItems:'center',  justifyContent:'end', width:'100%', marginRight:'20px'}}>
           <img src={data?.user.avatar} width={30} height={30} ></img> 
           <div style={{marginLeft:'20px'}}>
             <div>
@@ -41,6 +40,7 @@ function Header() {
             </div>
             <div>
             <label style={{color:'gray', fontSize:'10px'}}>Total: {data?.price}</label>
+            <label>sd</label>
               </div>
           </div>
         </div>
