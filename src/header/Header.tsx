@@ -40,7 +40,6 @@ function Header() {
             </div>
             <div>
             <label style={{color:'gray', fontSize:'10px'}}>Total: {data?.price}</label>
-            <label>sd</label>
               </div>
           </div>
         </div>
