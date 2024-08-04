@@ -36,6 +36,15 @@ registerApplication({
   activeWhen: ["/orders/:id"]
 });
 
+registerApplication({
+  name: "@acc/graphqlapp",
+  app: () =>
+    System.import<LifeCycles>(
+      "@acc/graphqlapp"
+    ),
+  activeWhen: ["/cart"],
+});
+
 start({
   urlRerouteOnly: true,
 });

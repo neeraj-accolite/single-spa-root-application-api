@@ -6,6 +6,7 @@
         "@acc/root-config": "//localhost:9000/src/acc-root-config.ts",
         "@acc/header":"//localhost:9000/src/header/acc-header.ts",
         "@acc/footer":"//localhost:9000/src/header/acc-footer.ts",
+        "@acc/graphqlapp": "http://localhost:5176/src/acc-graphqlapp.ts",
         "@acc/profile":"http://localhost:5172/src/acc-profile.ts",
         "@acc/address": "http://localhost:8600/src/acc-address.ts",
         "@acc/orders":"http://localhost:5173/src/acc-orders.tsx",
