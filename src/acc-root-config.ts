@@ -33,7 +33,7 @@ registerApplication({
     System.import<LifeCycles>(
       "@acc/orders"
     ),
-  activeWhen: ["/orders/:id"]
+  activeWhen: [(location) => location.pathname.startsWith("/orders/")]
 });
 
 registerApplication({
